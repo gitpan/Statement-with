@@ -1,0 +1,60 @@
+NAME
+
+    Statement::with - implementation of OO 'with' statement
+
+DESCRIPTION
+
+    Implementation of equivalent of javascript's with statement.
+
+    Exploits 'AUTOLOAD' mechanism.
+
+EXPORT
+
+    by default:
+
+     (hardwired without any checks)
+
+     sub   AUTOLOAD {...}
+     sub   with ($&) {...}
+     array @AUTOLOAD_WITH
+
+SYNTAX
+
+     'with' < blessed object > ',' 'sub' < perl code block > ';'
+
+SYNOPSIS
+
+     my $obj = MY::PKG->new();
+ 
+     # following two constructs are equivalent
+ 
+     # -1-
+     $obj->hello( $word );
+ 
+     # -2-
+     with $obj, sub
+     {
+            hello( $word );
+     }
+ 
+BUGS
+
+    Be carefull about nesting and recursive calls - not tested yet.
+
+AUTHOR
+
+     mailto:Daniel.Peder@Infoset.COM
+     http://www.Infoset.COM/?from=MAN//Statement::with
+ 
+     all
+      comments, improvements, bug reports, etc...
+     honored
+
+COPYRIGHT
+
+    opensource, free for use, same license as the perl itself.
+
+SEE ALSO
+
+    t-with.pl script in the distro's root dir.
+

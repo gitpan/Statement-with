@@ -1,0 +1,54 @@
+#!/usr/bin/perl -w
+
+$,=' '; $\="\n"; # readable print
+	
+#
+# This is the example how to use the 'with' statement
+#
+# $Id$
+#
+
+
+
+use Statement::with;
+	
+	my $myObject1 = myPackage1->new;
+	my $myObject2 = myPackage2->new;
+	
+	my $myValue   = 'start';          # 'tracking' variable
+	
+	$myObject1->ahoj( $myValue );     # 1st - the classical use
+
+	with $myObject1, sub {
+
+		ahoj( $myValue );             # 2nd - call to 'with-ed' package
+		$myObject2->ahoj( $myValue ); # 3rd - test call to another package
+
+	};
+
+	# this is the result, it should be:
+	#
+	#   'start ahoj:myPackage1 ahoj:myPackage1 ahoj:myPackage2'
+	#
+	print $myValue;
+
+package myPackage1;
+
+	sub new { bless {} }
+
+	sub ahoj 
+	{ 
+		my $self  = shift;
+		$_[0] .= ' ahoj:'.__PACKAGE__;
+	}
+
+package myPackage2;
+
+	sub new { bless {} }
+
+	sub ahoj 
+	{ 
+		my $self  = shift;
+		$_[0] .= ' ahoj:'.__PACKAGE__;
+	}
+
